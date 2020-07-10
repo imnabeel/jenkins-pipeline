@@ -1,0 +1,77 @@
+pipeline {
+    agent { 
+        label { 
+            label 'penpenny-development'
+            customWorkspace '/home/ubuntu/jenkins-pipeline-test'       
+        }
+        
+    }
+	    stages {
+            stage(‘SCM’) {
+	            steps {
+	                git branch: 'master', url: 'https://github.com/imnabeel/jenkins-pipeline.git'
+	            }
+	         }
+	        stage (‘Restart’) {
+	            steps {
+		            sh label: 'restart', script: 'pm2 restart admin-service'
+            	}
+	        }
+	    }
+	post { 
+        failure { 
+            emailext attachLog: true, body: '''<!DOCTYPE html>
+<html>
+<body>
+  <p>Hey,</p>
+  <p>Please find build details below:</p>
+  
+      <p>Application</p>
+      <p>Test - Jenkins Pipeline</p>
+  
+      <p>Branch</p>
+      <p>Development</p>
+  
+      <p>Build Number</p>
+      <p>$BUILD_NUMBER</p>
+  
+      <p>Build Status</p>
+      <p>$BUILD_STATUS</p>
+  
+      <p>PFA BUILD logs</p>
+  
+  <p>Regards<br>
+DevOps Team</p>
+
+</body>
+</html>''', mimeType: 'text/html', subject: 'Jenkins-Pipeline Test Build No - $BUILD_NUMBER', to: 'nabeel.shaikh@penpenny.com'
+        }
+        success{
+            emailext attachLog: true, body: '''<!DOCTYPE html>
+<html>
+<body>
+  <p>Hey,</p>
+  <p>Please find build details below:</p>
+  
+      <p>Application</p>
+      <p>Test - Jenkins Pipeline</p>
+  
+      <p>Branch</p>
+      <p>Development</p>
+  
+      <p>Build Number</p>
+      <p>$BUILD_NUMBER</p>
+  
+      <p>Build Status</p>
+      <p>$BUILD_STATUS</p>
+  
+      <p>PFA BUILD logs</p>
+  
+  <p>Regards<br>
+DevOps Team</p>
+
+</body>
+</html>''', mimeType: 'text/html', subject: 'Jenkins-Pipeline Test Build No - $BUILD_NUMBER', to: 'nabeel.shaikh@penpenny.com'
+        }
+    }
+}
