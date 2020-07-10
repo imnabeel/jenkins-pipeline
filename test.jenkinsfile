@@ -23,7 +23,7 @@ pipeline {
             emailext attachLog: true, body: '''<!DOCTYPE html>
 <html>
 <body>
-  <p>Hey,</p>
+  <p>Hey there,</p>
   <p>Please find build details below:</p>
   
       <p>Application</p>
@@ -47,7 +47,7 @@ DevOps Team</p>
             emailext attachLog: true, body: '''<!DOCTYPE html>
 <html>
 <body>
-  <p>Hey,</p>
+  <p>Hey there,</p>
   <p>Please find build details below:</p>
   
       <p>Application</p>
