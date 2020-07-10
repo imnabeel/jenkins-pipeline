@@ -53,18 +53,16 @@ DevOps Team</p>
       <p>Application</p>
       <p>Test - Jenkins Pipeline</p>
   
-      <p>Branch</p>
-      <p>Development</p>
+      <p>Branch : Development</p>
   
-      <p>Build Number</p>
-      <p>$BUILD_NUMBER</p>
+      <p>Build Number : $BUILD_NUMBER</p>
   
-      <p>Build Status</p>
-      <p>$BUILD_STATUS</p>
+      <p>Build Status : $BUILD_STATUS</p>
   
-      <p>PFA BUILD logs - scm test</p>
+      <p>PFA BUILD logs</p>
   
   <p>Regards<br>
+
 DevOps Team</p>
 
 </body>
