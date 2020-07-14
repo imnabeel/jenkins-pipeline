@@ -3,8 +3,7 @@ pipeline {
         label { 
             label 'penpenny-development'
             customWorkspace '/home/ubuntu/jenkins-pipeline-test'       
-        }
-        
+        }        
     }
 	    stages {
             stage(‘SCM’) {

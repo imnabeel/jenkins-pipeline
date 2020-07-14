@@ -1,0 +1,57 @@
+pipeline {
+    agent { 
+        label { 
+            label 'dev-csap.10ttech.net'
+            customWorkspace '/home/nabeel/client-10ttech-csap-api'       
+        }       
+    }
+	    stages {
+            stage(‘SCM’) {
+	            steps {
+	                git branch: 'development', url: 'https://github.com/Penpenny/client-10ttech-csap-api.git'
+	            }
+	         }
+	        stage ('Pull') {
+	            steps {
+		            sh label: 'pull', script: 'predator311Q' | sudo -S git pull'
+            	}
+	        }
+            stage (‘NPM’) {
+	            steps {
+		            sh label: 'npm', script: 'sudo npm install'
+            	}
+	        }
+            stage (‘BUILD’) {
+	            steps {
+		            sh label: 'build', script: 'sudo npm run build'
+            	}
+	        }
+	        stage (‘Restart’) {
+	            steps {
+		            sh label: 'restart', script: 'sudo pm2 restart dev-preprod-csap'
+            	}
+	        }
+	    }
+	post { 
+        failure { 
+            emailext attachLog: true, body: '''<!DOCTYPE html>
+<html>
+<body>
+  <p>Hi Team,</p>
+  <p>Test from notifcation pipeline..</p>
+
+</body>
+</html>''', mimeType: 'text/html', subject: 'Jenkins Job | Penpenny Core API on Development - Build No - $BUILD_NUMBER', to: 'nabeel.shaikh@10ttech.com'
+        }
+        success{
+            emailext attachLog: true, body: '''<!DOCTYPE html>
+<html>
+<body>
+  <p>Hi Team,</p>
+  <p>Test from notifcation pipeline..</p>
+
+</body>
+</html>''', mimeType: 'text/html', subject: 'Jenkins Job | Penpenny Core API on Development - Build No - $BUILD_NUMBER', to: 'nabeel.shaikh@10ttech.com'
+        }
+    }
+}
